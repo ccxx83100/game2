@@ -26,6 +26,8 @@ public class MainScript : MonoBehaviour
 	DebugArrayLog dal = new DebugArrayLog();
 	DebugListLog dll = new DebugListLog();
 
+	public static int st_test = 10000;
+
 
 	//-------------------------------------------------------------------------------------------------------------------------
 	//GAME START
@@ -52,19 +54,28 @@ public class MainScript : MonoBehaviour
 	//-------------------------------------------------------------------------------------------------------------------------
 	//UPDATE
 	//-------------------------------------------------------------------------------------------------------------------------
+
 	private int clickCount = 0;
+	MouseOperation mouseOpe = new MouseOperation();
+
 	void Update()
 	{
 		BoMove_Fnc();
+		//mouseOpe = new MouseOperation();
+		//mouseOpe.MouseClickDrag();
 
-		string md_mouseLRUD = MouseDragScript.mouseLRUD;
+		string md_mouseLRUD = MouseDrag.mouseLRUD;
+		//md_mouseLRUD = mouseOpe.mouseLRUD;
 		if (md_mouseLRUD == "STOP")
 		{
 			//クリック取得
 			if (Input.GetMouseButtonDown(0))
 			{
-				clickCount++;
-				Invoke("DoubleClick_Fnc", 0.4f);
+				clickCount = 2;
+				DoubleClick_Fnc();
+
+				//clickCount++;
+				//Invoke("DoubleClick_Fnc", 0.4f);
 			}
 		}
 
@@ -185,7 +196,8 @@ public class MainScript : MonoBehaviour
 			Debug.Log("-----RESET-----");
 			nowDeleteCount = maxDeleteCount;
 			pd_UIText.text = "Break!!  " + nowDeleteCount + " / " + maxDeleteCount;
-			MouseDragScript.mouseLRUD = "STOP";
+			MouseDrag.mouseLRUD = "STOP";
+			//mouseOpe.mouseLRUD = "STOP";
 			//ボールを止める
 			BoStop_Fnc();
 			//パネルを全部削除
@@ -277,8 +289,6 @@ public class MainScript : MonoBehaviour
 				int notDelX = int.Parse(substRC_Num(ConfirmObject.name, "C"));
 				int notDelY = int.Parse(substRC_Num(ConfirmObject.name, "R"));
 
-				Debug.Log(notDelX + ":" + notDelY);
-				Debug.Log(nowPosition[0] + ":" + nowPosition[1]);
 
 				if (notDelX == nowPosition[0] && notDelY == nowPosition[1])
 				{
@@ -286,6 +296,7 @@ public class MainScript : MonoBehaviour
 				}
 				else
 				{
+					Debug.Log("Delete? " + notDelX + ":" + notDelY);
 					Delete_Fnc(ConfirmObject.name);
 				}
 
@@ -382,7 +393,8 @@ public class MainScript : MonoBehaviour
 	//-------------------------------------------------------------------------------------------------------------------------
 	private void BoMove_Fnc()
 	{
-		string md_mouseLRUD = MouseDragScript.mouseLRUD;
+		string md_mouseLRUD = MouseDrag.mouseLRUD;
+		//md_mouseLRUD = mouseOpe.mouseLRUD;
 		float ballMove = 0.15f;
 		float ballRotation = 6.0f;
 		Vector3 _pos = Bo.transform.position;
@@ -497,8 +509,12 @@ public class MainScript : MonoBehaviour
 	{
 
 		Debug.Log("-----------------Stop-------------------");
-		MouseDragScript.mouseLRUD = "STOP";
-		MouseDragScript.moveChange();
+
+		MouseDrag.mouseLRUD = "STOP";
+		MouseDragScript.OnMouseDown();
+
+		//mouseOpe.mouseLRUD = "STOP";
+		//mouseOpe.MouseReset();
 
 
 	}

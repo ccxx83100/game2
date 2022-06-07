@@ -11,9 +11,10 @@ public class StageSelect : MonoBehaviour
 	public int stageMax;
 	public int _msStageNo;
 
-
+	//-------------------------------------------------------------------
+	//ドロップダウンリスト生成
+	//-------------------------------------------------------------------
 	void Start()
-
 	{
 		StageList stl = new StageList();
 		stageMax = stl.switchStage;
@@ -40,7 +41,6 @@ public class StageSelect : MonoBehaviour
 
 		dropDown.value = _msStageNo;
 
-
 	}
 
 	//-------------------------------------------------------------------
@@ -53,6 +53,7 @@ public class StageSelect : MonoBehaviour
 		GameObject _ga = GameObject.Find("GameMain");
 		MainScript _ms = _ga.GetComponent<MainScript>();
 		bool _flg = _ms.escapeFlg;
+		Debug.Log(_flg);
 		if (!_flg)
 		{
 

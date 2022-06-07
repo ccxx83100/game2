@@ -12,7 +12,7 @@ minMoveMouse
 
 public class MouseDrag : MonoBehaviour
 {
-	public string mouseLRUD;
+	public static string mouseLRUD;
 	public float minMoveMouse = 10.0f;
 	public float sw_minMoveMouse = 0.1f;
 
@@ -24,6 +24,7 @@ public class MouseDrag : MonoBehaviour
 		_sr.material.color = _sr.material.color - new Color32(0, 0, 0, 255);
 		Vector3 _pos = gameObject.transform.position;
 		_pos.z = -1;
+
 		gameObject.transform.position = _pos;
 
 	}
@@ -36,24 +37,12 @@ public class MouseDrag : MonoBehaviour
 	//-------------------------------------------------------------------------------------------------------------------------
 	//クリックしたとき
 	//-------------------------------------------------------------------------------------------------------------------------
-	void OnMouseDown()
+	public void OnMouseDown()
 	{
 		//Debug.Log("Event-----OnMouseDown-----");
 		startPos = Input.mousePosition;
-
 		sw_startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-		Debug.Log(sw_startPos);
-	}
-
-	public void moveChange()
-	{
-		//Debug.Log("Event-----OnMouseDown-----");
-		startPos = Input.mousePosition;
-
-		sw_startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-		Debug.Log(sw_startPos);
+		//Debug.Log(sw_startPos);
 	}
 
 
@@ -78,7 +67,7 @@ public class MouseDrag : MonoBehaviour
 		float mathAbsX = Mathf.Abs(moveX);
 		float mathAbsY = Mathf.Abs(moveY);
 
-		Debug.Log(mathAbsX + " : " + mathAbsY);
+		//Debug.Log(mathAbsX + " : " + mathAbsY);
 
 
 		if (mouseLRUD == "STOP")
@@ -114,6 +103,8 @@ public class MouseDrag : MonoBehaviour
 
 
 	}
+
+
 }
 
 
