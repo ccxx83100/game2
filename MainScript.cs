@@ -25,8 +25,7 @@ public class MainScript : MonoBehaviour
 	public int Serialize_StageNo;
 	DebugArrayLog dal = new DebugArrayLog();
 	DebugListLog dll = new DebugListLog();
-	//オートラン回避フラグ
-	public bool autoRunFlg = false;
+
 
 	//-------------------------------------------------------------------------------------------------------------------------
 	//GAME START
@@ -186,11 +185,7 @@ public class MainScript : MonoBehaviour
 			Debug.Log("-----RESET-----");
 			nowDeleteCount = maxDeleteCount;
 			pd_UIText.text = "Break!!  " + nowDeleteCount + " / " + maxDeleteCount;
-			autoRunFlg = false;
 			MouseDragScript.mouseLRUD = "STOP";
-			//オートランボタン初期化
-			GameObject _go = GameObject.Find("AutoRunButton");
-			_go.GetComponent<Image>().color = new Color(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
 			//ボールを止める
 			BoStop_Fnc();
 			//パネルを全部削除
@@ -385,7 +380,6 @@ public class MainScript : MonoBehaviour
 	//-------------------------------------------------------------------------------------------------------------------------
 	//ボールオブジェクトの移動関数
 	//-------------------------------------------------------------------------------------------------------------------------
-	private string foregroundPanel;
 	private void BoMove_Fnc()
 	{
 		string md_mouseLRUD = MouseDragScript.mouseLRUD;
@@ -419,7 +413,6 @@ public class MainScript : MonoBehaviour
 						else
 						{
 							_pos.x = panelVecter2XY[nowPosition[0], nowPosition[1], 0];
-							foregroundPanel = "West";
 							BoStop_Fnc();
 						}
 					}
@@ -440,7 +433,6 @@ public class MainScript : MonoBehaviour
 						else
 						{
 							_pos.x = panelVecter2XY[nowPosition[0], nowPosition[1], 0];
-							foregroundPanel = "East";
 							BoStop_Fnc();
 						}
 					}
@@ -461,7 +453,6 @@ public class MainScript : MonoBehaviour
 						else
 						{
 							_pos.y = panelVecter2XY[nowPosition[0], nowPosition[1], 1];
-							foregroundPanel = "South";
 							BoStop_Fnc();
 						}
 					}
@@ -482,7 +473,6 @@ public class MainScript : MonoBehaviour
 						else
 						{
 							_pos.y = panelVecter2XY[nowPosition[0], nowPosition[1], 1];
-							foregroundPanel = "North";
 							BoStop_Fnc();
 						}
 					}
@@ -506,102 +496,10 @@ public class MainScript : MonoBehaviour
 	private void BoStop_Fnc()
 	{
 
-		//dal.Array2DLog(panelArray);
-		if (autoRunFlg)
-		{
+		Debug.Log("-----------------Stop-------------------");
+		MouseDragScript.mouseLRUD = "STOP";
+		MouseDragScript.moveChange();
 
-			int[] _nowPos = nowPosition;
-			int[] _northPos = { nowPosition[0] - 1, nowPosition[1] };
-			int[] _southPos = { nowPosition[0] + 1, nowPosition[1] };
-			int[] _westPos = { nowPosition[0], nowPosition[1] - 1 };
-			int[] _eastPos = { nowPosition[0], nowPosition[1] + 1 };
-
-			dal.Array1DLog(_northPos);
-			dal.Array1DLog(_southPos);
-			dal.Array1DLog(_westPos);
-			dal.Array1DLog(_eastPos);
-
-			List<string> _sarchList = new List<string>();
-			//foregroundPanel 東西南北
-
-			//北
-			if (panelArray[_northPos[0], _northPos[1]] == 1)
-			{
-				if (foregroundPanel != "North")
-				{
-					_sarchList.Add("North");
-				}
-			}
-
-			//南
-			if (panelArray[_southPos[0], _southPos[1]] == 1)
-			{
-				if (foregroundPanel != "South")
-				{
-					_sarchList.Add("South");
-				}
-			}
-
-			//西
-			if (panelArray[_westPos[0], _westPos[1]] == 1)
-			{
-				if (foregroundPanel != "West")
-				{
-					_sarchList.Add("West");
-				}
-			}
-
-			//東
-			if (panelArray[_eastPos[0], _eastPos[1]] == 1)
-			{
-				if (foregroundPanel != "East")
-				{
-					_sarchList.Add("East");
-				}
-			}
-
-			dll.List1DLog(_sarchList);
-
-			if (_sarchList.Count == 1)
-			{
-				string _NSEW = _sarchList[0];
-				switch (_NSEW)
-				{
-					case "North":
-						MouseDragScript.mouseLRUD = "U";
-						break;
-					case "South":
-						MouseDragScript.mouseLRUD = "D";
-						break;
-					case "West":
-						MouseDragScript.mouseLRUD = "L";
-						break;
-					case "East":
-						MouseDragScript.mouseLRUD = "R";
-						break;
-					default:
-						break;
-				}
-			}
-			else
-			{
-				Debug.Log("-----------------stop-------------------");
-				MouseDragScript.mouseLRUD = "STOP";
-			}
-			_sarchList.Clear();
-			Debug.Log(MouseDragScript.mouseLRUD);
-
-
-
-		}
-		else
-		{
-			Debug.Log("-----------------stop-------------------");
-			MouseDragScript.mouseLRUD = "STOP";
-			//MouseDrag md = new MouseDrag();
-			MouseDragScript.moveChange();
-
-		}
 
 	}
 
