@@ -39,6 +39,9 @@ public class MainScript : MonoBehaviour
 
 	public void Start()
 	{
+
+		CSVImporter.Init();
+
 		if (Serialize_StageNo >= 1)
 		{
 			escapeFlg = false;
@@ -56,7 +59,7 @@ public class MainScript : MonoBehaviour
 	//-------------------------------------------------------------------------------------------------------------------------
 
 	private int clickCount = 0;
-	MouseOperation mouseOpe = new MouseOperation();
+	//MouseOperation mouseOpe = new MouseOperation();
 
 	void Update()
 	{
@@ -298,10 +301,10 @@ public class MainScript : MonoBehaviour
 				{
 					Debug.Log("Delete? " + notDelX + ":" + notDelY);
 					Delete_Fnc(ConfirmObject.name);
+					nowDeleteCount--;
+					pd_UIText.text = "Break!!  " + nowDeleteCount + " / " + maxDeleteCount;
 				}
 
-				nowDeleteCount--;
-				pd_UIText.text = "Break!!  " + nowDeleteCount + " / " + maxDeleteCount;
 			}
 		}
 	}

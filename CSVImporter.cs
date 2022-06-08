@@ -7,10 +7,10 @@ using System.IO;
 public class CSVImporter//MonoBehaviourは継承しない
 {
 
-	DebugListLog dll = new DebugListLog();
+
 	static TextAsset csvFile;
 	//CSVファイルを変数として扱うために宣言
-	static List<string[]> csvData = new List<string[]>();
+	static List<string[]> csvDataList = new List<string[]>();
 	//CSVファイルの中身を入れる配列を定義。全てのデータが文字列形式で格納される
 	//変数名[i]がエネミーIDがiの情報をそれぞれ示す
 
@@ -27,22 +27,28 @@ public class CSVImporter//MonoBehaviourは継承しない
 		//指定したファイルをTextAssetとして読み込み(ファイル名の.csvは不要なことに注意)　
 		//最初の行（タイトル部分）も読み込まれるのでそこは使用しない
 
-		csvFile = Resources.Load("test") as TextAsset;
-		StringReader _stReader = new StringReader(csvFile.text);
-		//最後まで読み込むと-1になる関数
-		while (_stReader.Peek() != -1)
-		{
-			//一行ずつ読み込み
-			string line = _stReader.ReadLine();
-			//,区切りでリストに追加していく
-			csvData.Add(line.Split(','));
-		}
-
-
+		csvFile = Resources.Load("hello_world") as TextAsset;
+		Debug.Log(csvFile);
+		//StringReader _stReader = new StringReader(csvFile.text);
+		/*
+				
+				//最後まで読み込むと-1になる関数
+				while (_stReader.Peek() != -1)
+				{
+					//一行ずつ読み込み
+					string rline = _stReader.ReadLine();
+					//,区切りでリストに追加していく
+					csvDataList.Add(rline.Split(','));
+				}
+				DebugListLog dll = new DebugListLog();
+				dll.List1DLog(csvDataList);
+				// DebugListLog.List1DLog(csvData);
+				*/
+		Debug.Log("test");
 
 	}
 	//enemyDataに一度CSVファイルのデータを読み込んだら他のプログラムから扱いやすいよう定義したenemyID等の変数にデータを格納する
-	public void Init()
+	public static void Init()
 	{
 		CsvReader();
 		//enemyDataへ情報を一時格納
